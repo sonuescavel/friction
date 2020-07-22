@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
 
-
-public class ComplitePlayerControler : MonoBehaviour
+namespace Friction
 {
-    public float smoothSpeed=0.125f;               
-    public Transform target;
-    public Vector3 offset;
-
-    void Start()
+    public class ComplitePlayerControler : MonoBehaviour
     {
-        Debug.Log("move Camera");
-    }
+        public float smoothSpeed = 0.125f;
+        public Transform target;
+        public Vector3 offset;
 
-    void LateUpdate()
-    {
-        transform.position=target.position + offset;
-    }
+        void Start()
+        {
+            Debug.Log("move Camera");
+        }
 
+        void LateUpdate()
+        {
+            transform.position = target.position + offset;
+        }
+    }
 }
-
-
-

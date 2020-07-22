@@ -2,48 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-    
 
-public class AddForces : MonoBehaviour
+namespace Friction
 {
-    public float force = 10;
-
-    // Update is called once per frame
-    void Update()
+    public class AddForces : MonoBehaviour
     {
-        if (Input.GetMouseButtonDown(0))
+        public float force = 10;
+
+        // Update is called once per frame
+        void Update()
         {
-            if (EventSystem.current.IsPointerOverGameObject())
-                return;
-
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, 100.0f))
+            if (Input.GetMouseButtonDown(0))
             {
-                if (hit.transform != null)
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
+
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, 100.0f))
                 {
-                    Rigidbody rigidbody;
-                    if (rigidbody = hit.transform.GetComponent<Rigidbody>())
+                    if (hit.transform != null)
                     {
-                        rigidbody.velocity = transform.right * Time.deltaTime * 10;
+                        Rigidbody rigidbody;
+                        if (rigidbody = hit.transform.GetComponent<Rigidbody>())
+                        {
+                            rigidbody.velocity = transform.right * Time.deltaTime * 10;
+                        }
                     }
                 }
             }
         }
+
+        private void PrintName(GameObject go)
+        {
+            print(go.name);
+        }
+
+        private void LaunchIntoAir(Rigidbody rig)
+        {
+            rig.AddForce(rig.transform.up * force, ForceMode.Impulse);
+        }
     }
-
-    private void PrintName(GameObject go)
-    {
-        print(go.name);
-    }
-
-    private void LaunchIntoAir(Rigidbody rig)
-    {
-        rig.AddForce(rig.transform.up * force, ForceMode.Impulse);
-    }
-
-                 
-  }
-    
-
+}
