@@ -109,7 +109,8 @@ namespace Friction
                     TenKGBoxMove.instance.rb.velocity = Vector3.right * boxMoveSpeed;
                     TenKGBoxMove.instance.rb.drag = tenDrag;
                     TenKGBoxMove.instance.blueArrowPushForce.SetActive(true);
-                    Invoke("EnableFrictionArrow", 0.15f);
+                    Invoke("EnableFrictionArrow", 0.02f);
+                    Invoke("DisablePushArrow", 0.05f);
                     Invoke("DisableFrictionArrow", 0.65f);
                 }
 
@@ -133,22 +134,38 @@ namespace Friction
            
 
         }
+
+        public void DisablePushArrow()
+        {
+            if (FiftyKGBOxMove.instance.isBoxOtherDesk)
+            {
+                FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(false);
+            }
+            if (HundredKGBoxMove.instance.isBoxOtherDesk)
+            {
+               HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+            }
+            if (TenKGBoxMove.instance.isBoxOtherDesk)
+            {
+               TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+            }
+        }
         public void EnableFrictionArrow()
         {
             if (FiftyKGBOxMove.instance.isBoxOtherDesk)
             {
                 FiftyKGBOxMove.instance.redArrowFriction.SetActive(true);
-                FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(false);
+               // FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(false);
             }
             if (HundredKGBoxMove.instance.isBoxOtherDesk)
             {
                 HundredKGBoxMove.instance.redArrowFriction.SetActive(true);
-                HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+              //  HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
             }
             if (TenKGBoxMove.instance.isBoxOtherDesk)
             {
                 TenKGBoxMove.instance.redArrowFriction.SetActive(true);
-                TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+               // TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
             }
         }
 
