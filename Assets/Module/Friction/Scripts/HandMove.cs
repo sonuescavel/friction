@@ -77,6 +77,8 @@ namespace Friction
                     HundredKGBoxMove.instance.blueArrowPushForce.SetActive(true);
                     Invoke("EnableFrictionArrow", 0.15f);
                     Invoke("DisableFrictionArrow", 0.65f);
+                    Invoke("DisablePushArrow", 0.05f);
+
                 }
                 if (FiftyKGBOxMove.instance.isBoxOtherDesk)
                 {
@@ -89,6 +91,7 @@ namespace Friction
                     FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(true);
                     Invoke("EnableFrictionArrow", 0.15f);
                     Invoke("DisableFrictionArrow", 0.65f);
+                    Invoke("DisablePushArrow", 0.05f);
 
                     if (InstructionDataScriptFriction.instance.isInstructionClick && !UIManager.instance.isSlowInstr)
                     {
