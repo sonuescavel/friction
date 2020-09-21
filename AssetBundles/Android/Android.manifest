@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3753286326
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: friction
+      Dependencies: {}

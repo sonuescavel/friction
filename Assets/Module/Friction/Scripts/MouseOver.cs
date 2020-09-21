@@ -3,56 +3,59 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MouseOver : MonoBehaviour
-  
+namespace Friction
 {
-    public float fadeTime;
-    public bool displayInfo;
-    public GameObject imageText;
+    public class MouseOver : MonoBehaviour
 
-    void Start()
     {
-        //myText = GameObject.Find("Text").GetComponent<Text>();
-        //myText.color = Color.clear;
+        public float fadeTime;
+        public bool displayInfo;
+        public GameObject imageText;
 
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        FadeText();
-        /*if (Input.GetKeyDown(KeyCode.Escape))
+        void Start()
         {
-            Screen.lockCursor = false;
+            //myText = GameObject.Find("Text").GetComponent<Text>();
+            //myText.color = Color.clear;
 
-        }*/
 
-    }
-
-    public void PointerEnter()
-    {
-        displayInfo = true;
-    }
- 
-    public void PointerExit()
-    {
-        displayInfo = false;
-        Debug.Log("MouseExited");
-    }
-
-    void FadeText()
-    {
-        if (displayInfo)
-        {
-           
-            imageText.SetActive(true);
-            
         }
-        else
+
+        // Update is called once per frame
+        void Update()
         {
-            imageText.SetActive(false);
-           
+            FadeText();
+            /*if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Screen.lockCursor = false;
+
+            }*/
+
+        }
+
+        public void PointerEnter()
+        {
+            displayInfo = true;
+        }
+
+        public void PointerExit()
+        {
+            displayInfo = false;
+            Debug.Log("MouseExited");
+        }
+
+        void FadeText()
+        {
+            if (displayInfo)
+            {
+
+                imageText.SetActive(true);
+
+            }
+            else
+            {
+                imageText.SetActive(false);
+
+            }
         }
     }
- }
+}

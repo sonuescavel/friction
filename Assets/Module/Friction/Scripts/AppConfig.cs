@@ -3,43 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AppConfig : MonoBehaviour
+namespace Friction
 {
-    public static bool isMouseDragForGravitation;
-    public static bool isMouseDrag;
-    public static bool isPauseApp;
-    public static bool isInstruction;
-    public static int Gravitation;
-
-    public GameObject air;
-    public GameObject solid;
-    public ComplitePlayerControler complitePlayerControler;
-    // Start is called before the first frame update
-    void Start()
+    public class AppConfig : MonoBehaviour
     {
-        //complitePlayerControler=GetComponent<ComplitePlayerControler>();
-    }
+        public static bool isMouseDragForGravitation;
+        public static bool isMouseDrag;
+        public static bool isPauseApp;
+        public static bool isInstruction;
+        public static int Gravitation;
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void OnClick(Button button)
-    {
-        if (button.name.Equals("Air"))
+        public GameObject air;
+        public GameObject solid;
+        public ComplitePlayerControler complitePlayerControler;
+        // Start is called before the first frame update
+        void Start()
         {
-            air.SetActive(true);
-            solid.SetActive(false);
-            complitePlayerControler.enabled = true;
+            //complitePlayerControler=GetComponent<ComplitePlayerControler>();
         }
-        else if (button.name.Equals("Solid"))
+
+        public void OnClick(Button button)
         {
-            solid.SetActive(true);
-            air.SetActive(false);
-            complitePlayerControler.enabled = false;
-            
+            if (button.name.Equals("Air"))
+            {
+                air.SetActive(true);
+                solid.SetActive(false);
+                complitePlayerControler.enabled = true;
+            }
+            else if (button.name.Equals("Solid"))
+            {
+                solid.SetActive(true);
+                air.SetActive(false);
+                complitePlayerControler.enabled = false;
+
+            }
         }
     }
 }
