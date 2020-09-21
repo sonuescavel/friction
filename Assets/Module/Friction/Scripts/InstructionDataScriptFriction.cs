@@ -58,7 +58,7 @@ namespace Friction
             UIManager.instance.Reset();
             SolidAirMediumSelection.instance.SolidMediumSelect();
             isInstructionClick = true;
-
+            instructionImage.SetActive(true);
             instructionButton.SetActive(false);
             exitInstructionMode.SetActive(true);
             objectiveTrans.DOAnchorPos(new Vector2(0f, -1200f), 1f);

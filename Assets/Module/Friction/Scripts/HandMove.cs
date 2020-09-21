@@ -76,6 +76,7 @@ namespace Friction
                     HundredKGBoxMove.instance.rb.drag = hundredDrag;
                     HundredKGBoxMove.instance.blueArrowPushForce.SetActive(true);
                     Invoke("EnableFrictionArrow", 0.15f);
+                    Invoke("DisablePushArrow", 0.05f);
                     Invoke("DisableFrictionArrow", 0.65f);
                 }
                 if (FiftyKGBOxMove.instance.isBoxOtherDesk)
@@ -88,8 +89,8 @@ namespace Friction
                     FiftyKGBOxMove.instance.rb.drag = fiftyDrag;
                     FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(true);
                     Invoke("EnableFrictionArrow", 0.15f);
+                    Invoke("DisablePushArrow", 0.05f);
                     Invoke("DisableFrictionArrow", 0.65f);
-
                     if (InstructionDataScriptFriction.instance.isInstructionClick && !UIManager.instance.isSlowInstr)
                     {
                         UIManager.instance.isPlayInstr = true;
