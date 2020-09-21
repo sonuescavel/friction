@@ -81,10 +81,7 @@ namespace Friction
                     PlayerPrefs.SetInt("seenMobileInputInfo", 1);
                 }
             }
-            else
-            {
-                cameraSliderContainer.SetActive(true);
-            }
+          
         }
 
         void TouchZoom()
@@ -177,7 +174,7 @@ namespace Friction
             // set min and max value of Clamp function upon your requirement
             CameraSwitchFriction.instance.mainCam.GetComponent<Camera>().fieldOfView = Mathf.Clamp(CameraSwitchFriction.instance.mainCam.GetComponent<Camera>().fieldOfView, ZoomMinBound, ZoomMaxBound);
             //float camSliderValue =
-            // cameraZoomInOutSlider.value = Mathf.Clamp(CameraSwitchElectrolysis.instance.mainCam.GetComponent<Camera>().fieldOfView, ZoomMinBound, ZoomMaxBound);
+             cameraZoomInOutSlider.value = Mathf.Clamp(CameraSwitchFriction.instance.mainCam.GetComponent<Camera>().fieldOfView, ZoomMinBound, ZoomMaxBound);
         }
         void LateUpdate()
         {
