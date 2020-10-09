@@ -201,20 +201,20 @@ MonoBehaviour:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
-    overrideState: 1
+    overrideState: 0
     value: 0
   saturation:
     overrideState: 1
-    value: 2
+    value: 28
   brightness:
     overrideState: 1
-    value: 33
+    value: 11
   postExposure:
     overrideState: 0
     value: 0
   contrast:
     overrideState: 1
-    value: -22
+    value: 93
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
