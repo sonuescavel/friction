@@ -67,14 +67,130 @@ namespace Friction
             y = angles.x;
             negDistance = new Vector3(0f, 0f, -distance);
 
-         
+            if (Input.touchSupported)
+            {
+                xAngle = x;
+                yAngle = y;
+                xSpeed = 60f;
+                ySpeed = 60f;
+                if (PlayerPrefs.GetInt("seenMobileInputInfo") == 0)
+                {
+                    mobileControlMessage.SetActive(true);
+                    PlayerPrefs.SetInt("seenMobileInputInfo", 1);
+                }
+
+
+            }
+
+
+
         }
 
-      
+        void TouchZoom()
+        {
+            // Pinch to zoom
+            if (Input.touchCount >= 2)
+            {
+                if (InstructionDataScriptFriction.instance.isInstructionClick)
+                {
+                    isScrolling = true;
+                }
+                
+                // get current touch positions
+                Touch tZero = Input.GetTouch(0);
+                Touch tOne = Input.GetTouch(1);
+                // get touch position from the previous frame
+                Vector2 tZeroPrevious = tZero.position - tZero.deltaPosition;
+                Vector2 tOnePrevious = tOne.position - tOne.deltaPosition;
+
+                float oldTouchDistance = Vector2.Distance(tZeroPrevious, tOnePrevious);
+                float currentTouchDistance = Vector2.Distance(tZero.position, tOne.position);
+
+                // get offset value
+                float deltaDistance = oldTouchDistance - currentTouchDistance;
+                Zoom(deltaDistance, TouchZoomSpeed);
+
+                // different 
+
+                if (InstructionDataScriptFriction.instance.isInstructionClick && isScrolling)
+                {
+                    InstructionDataScriptFriction.instance.camOrbitI.SetActive(true);
+                    InstructionDataScriptFriction.instance.camZoomI.SetActive(false);
+                    //  isScrolling = false;
+                }
+            }
+            else if (target && Input.touchCount == 1/* && Input.GetTouch(0).position.x > Screen.width / 2*/ && Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                Orbit(Input.GetTouch(0));
+
+            }
+
+            else if (Input.GetTouch(0).phase == TouchPhase.Ended && Input.touchCount == 1)
+            {
+                if (InstructionDataScriptFriction.instance.isInstructionClick && !InstructionDataScriptFriction.instance.isScrollInstr)
+                {
+                    isOrbiting = true;
+                    InstructionDataScriptFriction.instance.camOrbitI.SetActive(false);
+                    if (isScrolling)
+                    {
+                        isScrolling = false;
+                        CameraSwitchFriction.instance.mainCam.GetComponent<MouseMovement>().enabled = false;
+                        CameraSwitchFriction.instance.FrontView();
+                        InstructionDataScriptFriction.instance.fiftyBoxClickI.SetActive(true);
+                        FiftyKGBOxMove.instance.fiftyKgBoxObject.GetComponent<BoxCollider>().enabled = true;
+                    }
+
+
+                }
+            }
+        }
+        void Orbit(Touch touch)
+        {
+            if (!MouseCursor.obstacle)
+            {
+                x += touch.deltaPosition.x * xSpeed * 0.005f /* * distance*/;
+                y -= touch.deltaPosition.y * ySpeed * 0.005f /* * distance*/;
+                y = ClampAngle(y, yMinLimit, yMaxLimit);
+
+                Quaternion rotation = Quaternion.Euler(y, x, 0);
+
+                //distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
+
+                //RaycastHit hit;
+
+                //if (Physics.Linecast(target.position, transform.position, out hit))
+                //{
+                //}
+                Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
+                Vector3 position = rotation * negDistance + target.transform.position;
+                transform.rotation = rotation;
+                transform.position = position;
+
+            }
+        }
+
+        void Zoom(float deltaMagnitudeDiff, float speed)
+        {
+            Camera.main.fieldOfView += deltaMagnitudeDiff * speed;
+            // set min and max value of Clamp function upon your requirement
+            Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, ZoomMinBound, ZoomMaxBound);
+            cameraZoomInOutSlider.value = Camera.main.fieldOfView;
+        }
+
+
         void LateUpdate()
         {
-         
-            
+           
+            if (Input.touchSupported)
+            {
+                if (SolidAirMediumSelection.instance.isSolidSelected)
+                {
+                    TouchZoom();
+                }
+               
+            }
+            else
+            {
                 if (SolidAirMediumSelection.instance.isSolidSelected)
                 {
                     if (Input.GetMouseButtonDown(0))
@@ -172,14 +288,14 @@ namespace Friction
                     InstructionDataScriptFriction.instance.camZoomI.SetActive(false);
                     //  isScrolling = false;
                 }
-
+            }
 
             
         }
 
         public void CameraZoomIn()
         {
-            if (Camera.main.fieldOfView > 20f)
+            if (Camera.main.fieldOfView > minZoomV)
             {
                 if (InstructionDataScriptFriction.instance.isInstructionClick)
                 {
@@ -208,7 +324,7 @@ namespace Friction
 
         public void CameraZoomOut()
         {
-            if (Camera.main.fieldOfView < 80f)
+            if (Camera.main.fieldOfView < maxZoomV)
             {
                 if (InstructionDataScriptFriction.instance.isInstructionClick)
                 {

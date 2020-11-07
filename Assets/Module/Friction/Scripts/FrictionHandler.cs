@@ -151,6 +151,8 @@ namespace Friction
         public void ResetSolid()
         {
             HandMove.instance.resetBoxButton.SetActive(false);
+            GetValues.instance.isSelectSurfaceDown = false;
+            GetValues.instance.goneSerface();
           //  HandMove.instance.playButton.SetActive(true);
            // HandMove.instance.pauseButton.SetActive(false);
             HandMove.instance.hundredDrag = hSmoothDrag;
