@@ -35,7 +35,7 @@ namespace Friction
             solidObject.SetActive(true);
             solidPanel.SetActive(true);
             airObject.SetActive(false);
-
+            MouseMovement.instance.cameraSliderContainer.SetActive(true);
             CameraSwitchFriction.instance.FrontView();
            // CameraSwitchFriction.instance.mainCam.GetComponent<MouseMovement>().enabled = true;
         }
@@ -49,7 +49,7 @@ namespace Friction
             solidObject.SetActive(false);
             airPanel.SetActive(true);
             airObject.SetActive(true);
-
+            MouseMovement.instance.cameraSliderContainer.SetActive(false);
             CameraSwitchFriction.instance.FrontView();
           //  CameraSwitchFriction.instance.mainCam.GetComponent<MouseMovement>().enabled = false;
 
