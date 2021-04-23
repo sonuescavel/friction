@@ -67,20 +67,17 @@ namespace Friction
             y = angles.x;
             negDistance = new Vector3(0f, 0f, -distance);
 
-            if (Input.touchSupported)
+#if UNITY_ANDROID
+            xAngle = x;
+            yAngle = y;
+            xSpeed = 60f;
+            ySpeed = 60f;
+            if (PlayerPrefs.GetInt("seenMobileInputInfo") == 0)
             {
-                xAngle = x;
-                yAngle = y;
-                xSpeed = 60f;
-                ySpeed = 60f;
-                if (PlayerPrefs.GetInt("seenMobileInputInfo") == 0)
-                {
-                    mobileControlMessage.SetActive(true);
-                    PlayerPrefs.SetInt("seenMobileInputInfo", 1);
-                }
-
-
+                mobileControlMessage.SetActive(true);
+                PlayerPrefs.SetInt("seenMobileInputInfo", 1);
             }
+#endif
 
 
 
@@ -181,7 +178,7 @@ namespace Friction
         void LateUpdate()
         {
            
-            if (Input.touchSupported)
+            if (Application.platform == RuntimePlatform.Android)
             {
                 if (SolidAirMediumSelection.instance.isSolidSelected)
                 {

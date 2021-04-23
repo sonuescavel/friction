@@ -24,7 +24,7 @@ namespace  Friction
 
         [Header("UI Properties")]
         public Button resetButton;
-        public Button backButton;
+        public GameObject backButton;
         public Button slowButton;
 
 
@@ -44,6 +44,11 @@ namespace  Friction
         public void Awake()
         {
             instance = this;
+
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                backButton.SetActive(false);
+            }
         }
 
         public void PlayPauseGame()

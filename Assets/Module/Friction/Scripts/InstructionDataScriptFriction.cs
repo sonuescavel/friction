@@ -67,7 +67,7 @@ namespace Friction
             //disable all buttons interactablity
             CameraSwitchFriction.instance.mainCam.GetComponent<MouseMovement>().enabled = false;
             UIManager.instance.resetButton.interactable = false;
-            UIManager.instance.backButton.interactable = false;
+            UIManager.instance.backButton.GetComponent<Button>().interactable = false;
             UIManager.instance.slowButton.interactable = false;
             UIManager.instance.playPauseButton.GetComponent<Button>().interactable = false;
             MouseMovement.instance.cameraZoomInOutSlider.interactable = false;
