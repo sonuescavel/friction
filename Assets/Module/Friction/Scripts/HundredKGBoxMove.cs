@@ -47,6 +47,7 @@ namespace Friction
             if (!isBoxInitialPos)
             {
                 isBoxOtherDesk = !isBoxOtherDesk;
+
                 if (!isBoxOtherDesk)
                 {
                     boxAnim.SetBool("HBoxMove", false);
@@ -78,6 +79,8 @@ namespace Friction
                     {
                         TenKGBoxMove.instance.OnMouseDown();
                     }
+
+                    ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(0);
                 }
             }
             else

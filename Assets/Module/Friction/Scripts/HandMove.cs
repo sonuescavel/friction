@@ -24,16 +24,20 @@ namespace Friction
 
         public GameObject resetBoxButton;
 
-       // public GameObject playButton;
-      //  public GameObject pauseButton;
+        // public GameObject playButton;
+        //  public GameObject pauseButton;
 
         public bool isDoubleClick;
+
+        bool isHidden_100Kg_ForcePlayPauseContextualHelp;
+
+        //------------------------------------------------------------------------------------------
         public void Awake()
         {
             instance = this;
         }
 
-       
+
         public void OnMouseOver()
         {
             if (SolidMediumController.instance.isForceSet && (HundredKGBoxMove.instance.isBoxOtherDesk || FiftyKGBOxMove.instance.isBoxOtherDesk || TenKGBoxMove.instance.isBoxOtherDesk))
@@ -54,21 +58,20 @@ namespace Friction
         public void PauseClick()
         {
             Time.timeScale = 0f;
-         //   pauseButton.SetActive(false);
-          //  playButton.SetActive(true);
+            //   pauseButton.SetActive(false);
+            //  playButton.SetActive(true);
         }
         public void OnMouseDown()
         {
-         
             if (SolidMediumController.instance.isForceSet && ((HundredKGBoxMove.instance.isBoxOtherDesk || FiftyKGBOxMove.instance.isBoxOtherDesk || TenKGBoxMove.instance.isBoxOtherDesk)))
             {
                 Time.timeScale = 1f;
-                UIManager.instance.playPauseButton.GetComponent<Button>().interactable=false;
+                UIManager.instance.playPauseButton.GetComponent<Button>().interactable = false;
                 UIManager.instance.slowButton.interactable = false;
                 SolidMediumController.instance.ChangeForceSlider((int)SolidMediumController.instance.forceSlider.value);
                 if (HundredKGBoxMove.instance.isBoxOtherDesk)
                 {
-                   // handObject.GetComponent<BoxCollider>().enabled = false;
+                    // handObject.GetComponent<BoxCollider>().enabled = false;
                     handAnim.SetTrigger("HandMove");
                     HundredKGBoxMove.instance.boxAnim.enabled = false;
                     HundredKGBoxMove.instance.rb.isKinematic = false;
@@ -78,10 +81,16 @@ namespace Friction
                     Invoke("EnableFrictionArrow", 0.15f);
                     Invoke("DisablePushArrow", 0.05f);
                     Invoke("DisableFrictionArrow", 0.65f);
+
+                    if (!isHidden_100Kg_ForcePlayPauseContextualHelp)
+                    {
+                        ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(2);
+                        isHidden_100Kg_ForcePlayPauseContextualHelp = true;
+                    }
                 }
                 if (FiftyKGBOxMove.instance.isBoxOtherDesk)
                 {
-                   // handObject.GetComponent<BoxCollider>().enabled = false;
+                    // handObject.GetComponent<BoxCollider>().enabled = false;
                     handAnim.SetTrigger("HandMove");
                     FiftyKGBOxMove.instance.boxAnim.enabled = false;
                     FiftyKGBOxMove.instance.rb.isKinematic = false;
@@ -95,7 +104,7 @@ namespace Friction
                     {
                         UIManager.instance.isPlayInstr = true;
                         InstructionDataScriptFriction.instance.palyGameI.SetActive(false);
-                     
+
                         FiftyKGBOxMove.instance.fiftyKgBoxObject.GetComponent<BoxCollider>().enabled = true;
 
                     }
@@ -103,7 +112,7 @@ namespace Friction
 
                 if (TenKGBoxMove.instance.isBoxOtherDesk)
                 {
-                   // handObject.GetComponent<BoxCollider>().enabled = false;
+                    // handObject.GetComponent<BoxCollider>().enabled = false;
                     handAnim.SetTrigger("HandMove");
                     TenKGBoxMove.instance.boxAnim.enabled = false;
                     TenKGBoxMove.instance.rb.isKinematic = false;
@@ -113,6 +122,7 @@ namespace Friction
                     Invoke("EnableFrictionArrow", 0.02f);
                     Invoke("DisablePushArrow", 0.05f);
                     Invoke("DisableFrictionArrow", 0.65f);
+                    
                 }
 
             }
@@ -132,7 +142,7 @@ namespace Friction
             OnMouseDown();
             UIManager.instance.Slowspeed();
 
-           
+
 
         }
 
@@ -144,11 +154,11 @@ namespace Friction
             }
             if (HundredKGBoxMove.instance.isBoxOtherDesk)
             {
-               HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+                HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
             }
             if (TenKGBoxMove.instance.isBoxOtherDesk)
             {
-               TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+                TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
             }
         }
         public void EnableFrictionArrow()
@@ -156,17 +166,17 @@ namespace Friction
             if (FiftyKGBOxMove.instance.isBoxOtherDesk)
             {
                 FiftyKGBOxMove.instance.redArrowFriction.SetActive(true);
-               // FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(false);
+                // FiftyKGBOxMove.instance.blueArrowPushForce.SetActive(false);
             }
             if (HundredKGBoxMove.instance.isBoxOtherDesk)
             {
                 HundredKGBoxMove.instance.redArrowFriction.SetActive(true);
-              //  HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+                //  HundredKGBoxMove.instance.blueArrowPushForce.SetActive(false);
             }
             if (TenKGBoxMove.instance.isBoxOtherDesk)
             {
                 TenKGBoxMove.instance.redArrowFriction.SetActive(true);
-               // TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
+                // TenKGBoxMove.instance.blueArrowPushForce.SetActive(false);
             }
         }
 
@@ -203,13 +213,13 @@ namespace Friction
             resetBoxButton.SetActive(false);
             UIManager.instance.playPauseButton.GetComponent<Button>().interactable = true;
             UIManager.instance.slowButton.interactable = true;
-       
+
             if (TenKGBoxMove.instance.isBoxOtherDesk)
             {
                 TenKGBoxMove.instance.boxAnim.enabled = true;
                 TenKGBoxMove.instance.boxAnim.SetBool("TBoxMove", true);
                 TenKGBoxMove.instance.boxAnim.SetBool("TBoxMoveBack", false);
-                
+
                 TenKGBoxMove.instance.redArrowFriction.SetActive(false);
             }
             if (FiftyKGBOxMove.instance.isBoxOtherDesk)

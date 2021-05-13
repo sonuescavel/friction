@@ -36,13 +36,13 @@ namespace Friction
         public Button fallButton;
         public Rigidbody _ball_rigidbody;
         public Rigidbody _feather_rigidbody;
-       // public Rigi _ballFeatherPa_rigidbody;
+        // public Rigi _ballFeatherPa_rigidbody;
         public GameObject Assumption;
         public GameObject fetherWithBall;
         public GameObject fetherWithouthBall;
- 
-       // public TimerSpeed timerspeed;
-       // public UIManager uIManager;
+
+        // public TimerSpeed timerspeed;
+        // public UIManager uIManager;
         public AppConfig appConfig;
         public Vector3 initialPosition;
 
@@ -79,6 +79,7 @@ namespace Friction
             //    boxFStartG[i].transform.localEulerAngles = boxFractorCs[i].transform.localEulerAngles;
             //}
 
+            airBarSlider.onValueChanged.AddListener(OnSliderValuChangeHideContextual);
         }
 
         public void FixedUpdate()
@@ -111,7 +112,7 @@ namespace Friction
                 }
 
             }
-          
+
         }
 
         public void AssumptionClick()
@@ -134,7 +135,7 @@ namespace Friction
 
                 assumptionPanel.SetActive(false);
             }
-           
+
         }
 
         public void PauseScene()
@@ -155,17 +156,19 @@ namespace Friction
 
                 Time.timeScale = 0.5f;
             }
-          
+
             playPauseButton.SetActive(false);
             pauseButton.SetActive(true);
             isObjectDrop = true;
-           // assumptionButton.interactable = false;
-            isAssumptionClick= true;
+            // assumptionButton.interactable = false;
+            isAssumptionClick = true;
             AssumptionClick();
             slowMotionButton.interactable = false;
 
+            ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(6);
+
             //CameraSwitchFriction.instance.mainCam.transform.SetParent(_ball.transform, true);
-            
+
             CameraSwitchFriction.instance.mainCam.transform.localPosition = CameraSwitchFriction.instance.airStartPos.transform.localPosition;
             CameraSwitchFriction.instance.mainCam.transform.localEulerAngles = CameraSwitchFriction.instance.airStartPos.transform.localEulerAngles;
             iTween.MoveTo(CameraSwitchFriction.instance.mainCam.gameObject, CameraSwitchFriction.instance.airLastPos.transform.localPosition, 10);
@@ -182,17 +185,17 @@ namespace Friction
                     airFrictionText.SetActive(false);
                     airFrictionArrowRed.SetActive(true);
                     fallButton.interactable = false;
-                   // timerspeed.playing = true;
-                  
+                    // timerspeed.playing = true;
+
                     _feather_rigidbody.isKinematic = false;
                     _ball_rigidbody.isKinematic = false;
-                    
+
                     _feather_rigidbody.drag = 0;
                     _ball_rigidbody.drag = 0;
                     float ballSpeed = 2250f;
                     float featherSpeed = 2300f;
-                    _feather_rigidbody.velocity = Vector3.down * featherSpeed*Time.fixedDeltaTime;
-                    _ball_rigidbody.velocity = Vector3.down * ballSpeed*Time.fixedDeltaTime;
+                    _feather_rigidbody.velocity = Vector3.down * featherSpeed * Time.fixedDeltaTime;
+                    _ball_rigidbody.velocity = Vector3.down * ballSpeed * Time.fixedDeltaTime;
                     frictionArrowValue = 0;
                 }
                 else if (VaccumeAir.instance.airRemoveSlider.value == 1)
@@ -227,7 +230,7 @@ namespace Friction
                     airFrictionText.SetActive(true);
                     airFrictionArrowRed.SetActive(true);
                     fallButton.interactable = false;
-                   _ball_rigidbody.isKinematic = false;
+                    _ball_rigidbody.isKinematic = false;
                     _feather_rigidbody.isKinematic = false;
                     _ball_rigidbody.drag = 0.75f;
                     _feather_rigidbody.drag = 1.25f;
@@ -247,7 +250,7 @@ namespace Friction
             }
             VaccumeAir.instance.airRemoveSlider.interactable = false;
             GravitationalHandler.instance.increaseAirButton.interactable = false;
-            GravitationalHandler.instance.decreaseAirButton.interactable= false;
+            GravitationalHandler.instance.decreaseAirButton.interactable = false;
 
         }
 
@@ -255,7 +258,7 @@ namespace Friction
         {
             isSlowMotion = true;
             Time.timeScale = 0.5f;
-           // Debug.Log(Time.timeScale);
+            // Debug.Log(Time.timeScale);
             PlayPause();
 
             if (InstructionDataScriptFriction.instance.isInstructionClick)
@@ -264,14 +267,22 @@ namespace Friction
                 slowMotionButton.interactable = false;
                 pauseButton.GetComponent<Button>().interactable = false;
             }
-          
+
         }
 
-    public void SetSelectedButton(Button button, Color color)
+        public void SetSelectedButton(Button button, Color color)
         {
             button.GetComponent<Image>().color = color;
         }
 
-       
+        //---------------------------------------------------------------------------------
+        public void OnSliderValuChangeHideContextual(float value_)
+        {
+            if(airBarSlider.value > (airBarSlider.maxValue / 4f))
+            {
+                ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(5);
+            }
+        }
+
     }
 }

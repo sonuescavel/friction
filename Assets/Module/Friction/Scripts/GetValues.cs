@@ -14,6 +14,10 @@ namespace Friction
         public GameObject Surfaces;
         public bool isSelectSurfaceDown;
         public GameObject ArrowC, Arrow;
+
+
+        bool isHiddenForceSliderContextualHelp;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -24,6 +28,12 @@ namespace Friction
         void Update()
         {
             forceValue.text = sliderForApplyForce.value.ToString();
+
+            if(sliderForApplyForce.value > (sliderForApplyForce.maxValue/3f) && !isHiddenForceSliderContextualHelp)
+            {
+                ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(1);
+                isHiddenForceSliderContextualHelp = true;
+            }
         }
 
         public void SelectSUrfaces()
@@ -35,6 +45,8 @@ namespace Friction
             {
                 Surfaces.SetActive(true);
                 isSelectSurfaceDown = true;
+
+                ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(3);
 
                 if (InstructionDataScriptFriction.instance.isInstructionClick)
                 {

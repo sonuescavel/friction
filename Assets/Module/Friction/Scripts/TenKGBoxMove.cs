@@ -24,6 +24,10 @@ namespace Friction
         [Header("UI properties")]
         public GameObject redArrowFriction;
         public GameObject blueArrowPushForce;
+
+
+        private bool isHidden_10Kg_ForcePlayPauseContextualHelp;
+
         public void Awake()
         {
             instance = this;
@@ -47,6 +51,7 @@ namespace Friction
             if (!isBoxInitialPos)
             {
                 isBoxOtherDesk = !isBoxOtherDesk;
+
                 if (!isBoxOtherDesk)
                 {
                     boxAnim.SetBool("TBoxMove", false);
@@ -54,6 +59,12 @@ namespace Friction
                     HandMove.instance.resetBoxButton.SetActive(false);
                     HundredKGBoxMove.instance.hundredKgBoxObject.GetComponent<BoxCollider>().enabled = true;
                     FiftyKGBOxMove.instance.fiftyKgBoxObject.GetComponent<BoxCollider>().enabled = true;
+
+                    if (!isHidden_10Kg_ForcePlayPauseContextualHelp)
+                    {
+                        ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(4);
+                        isHidden_10Kg_ForcePlayPauseContextualHelp = true;
+                    }
                 }
 
                 else
@@ -77,6 +88,12 @@ namespace Friction
                         FiftyKGBOxMove.instance.OnMouseDown();
                     }
 
+                    if (!isHidden_10Kg_ForcePlayPauseContextualHelp)
+                    {
+                        ContextualHelpSystem.instance.StopIfShowingAndMoveToShowNext(4);
+                        isHidden_10Kg_ForcePlayPauseContextualHelp = true;
+                    }
+
                 }
             }
             else
@@ -95,7 +112,7 @@ namespace Friction
                // FiftyKGBOxMove.instance.fiftyKgBoxObject.GetComponent<BoxCollider>().enabled = true;
             }
 
-
+            
         }
 
 
